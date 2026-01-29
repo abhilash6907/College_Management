@@ -1,11 +1,23 @@
 const { Sequelize } = require( "sequelize");
 
-const sequelize = new Sequelize("postgres", "postgres", "ABHILASH", {
-  host: "127.0.0.1",
-  port: 3000,
-  dialect: "postgres",
-  logging: false
-});
+const sequelize = new Sequelize(
+  process.env.DB_NAME,
+  process.env.DB_USER,
+  process.env.DB_PASS,
+  {
+    host: process.env.DB_HOST,
+    port: 5432,
+    dialect: "postgres",
+    logging: false,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false
+      }
+    }
+  }
+);
+
 
 const dbConnection = async () => {
   try {
